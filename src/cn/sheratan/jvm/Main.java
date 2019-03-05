@@ -32,10 +32,7 @@ public class Main {
             formatter.printHelp("leafVm", options);
             return -1;
         };
-        Runtime rt = Runtime.getRuntime();
-        System.out.println(rt.totalMemory() + " " + rt.freeMemory());
-        rt.gc();
-        System.out.println(rt.totalMemory() + " " + rt.freeMemory());
+
         try {
             //对命令行参数进行解析
             CommandLine line = parser.parse(options, args);
@@ -49,8 +46,22 @@ public class Main {
             if(line.hasOption(classpath)){
                 cp = line.getOptionValue(classpath);
             }
+
+            //获取java源文件
+            String mainClass = line.getArgList().get(0);
+            run(cp, mainClass);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    /** 
+     * @Description: vm执行入口,
+     * @Param cp 类路径
+	 * @Param mainClass java源文件主名称
+     * @return: void
+     */ 
+    private static void run(String cp, String mainClass){
+        System.out.println(Main.class.getClassLoader().toString());
     }
 }
