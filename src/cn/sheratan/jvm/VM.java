@@ -14,7 +14,10 @@ public class VM {
     /**
      * @Description: VM 配置类
      */
-    public static class Config{
+    public static class Config {
+        /**
+         * @Description: 是否需要JIT处理
+         */
         private boolean isProcessByJIT = false;
 
         public void setProcessByJIT(boolean processByJIT) {
@@ -37,7 +40,7 @@ public class VM {
      */
     private Config config;
 
-    public VM(String[] classPathLst, Config config){
+    public VM(String[] classPathLst, Config config) {
         classPath = new ClassPath(classPathLst);
         classLoader = new ClassLoader(classPath);
         this.config = config;
@@ -48,19 +51,20 @@ public class VM {
      * @Param mainClass main方法所在类的全称
      * @return: void
      */
-    public void run(String mainClass){
+    public void run(String mainClass) {
         //加载主类
         Class clazz = classLoader.loadClass(mainClass);
         //获取并执行主类main方法
         MethodInfo methodInfo = clazz.findMethod("main", "([Ljava/lang/String;)V");
-        //验证访问标志与入口方法main的是否一致
-        Function<Integer, Boolean> flagCheck = (f) ->{
+        //验证访问标志
+        Function<Integer, Boolean> flagCheck = (f) -> {
             return (f & methodInfo.getAccessFlags()) != 0;
         };
-        if(methodInfo == null || !flagCheck.apply(MethodInfo.ACC_PUBLIC) || !flagCheck.apply(MethodInfo.ACC_STATIC)){
+        if (methodInfo == null || !flagCheck.apply(MethodInfo.ACC_PUBLIC) || !flagCheck.apply(MethodInfo.ACC_STATIC)) {
             throw new RuntimeException("main method is not static&public");
         }
+        //启动主线程
         Thread thread = new Thread();
-
+        thread.run(clazz, methodInfo);
     }
 }

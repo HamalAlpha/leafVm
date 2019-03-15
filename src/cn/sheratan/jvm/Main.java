@@ -36,14 +36,14 @@ public class Main {
         try {
             //对命令行参数进行解析
             CommandLine line = parser.parse(options, args);
-            if(line.getArgList().size() == 0){
+            if (line.getArgList().size() == 0) {
                 leafHelp.apply(null);
                 return;
             }
 
             //获取classpath参数
             String cp = null;
-            if(line.hasOption(classpath)){
+            if (line.hasOption(classpath)) {
                 cp = line.getOptionValue(classpath);
             }
 
@@ -54,14 +54,15 @@ public class Main {
             e.printStackTrace();
         }
     }
-    
-    /** 
+
+    /**
      * @Description: vm执行入口,
      * @Param cp 类路径
-	 * @Param mainClass java源文件主名称
+     * @Param mainClass java源文件主名称
      * @return: void
-     */ 
-    private static void run(String cp, String mainClass){
-
+     */
+    private static void run(String cp, String mainClass) {
+        VM vm = new VM(cp.split(";"), new VM.Config());
+        vm.run(mainClass);
     }
 }

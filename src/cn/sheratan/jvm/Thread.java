@@ -27,21 +27,21 @@ public class Thread {
         Frame frame = new Frame(this, clazz, method);
         pushFrame(frame);
         while (!frameList.isEmpty()) {
-            frame.run();
+            topFrame().run();
         }
     }
 
-    private void pushFrame(Frame f) {
+    public void pushFrame(Frame f) {
         LOGGER.info("push the " + f.toString());
         frameList.add(f);
     }
 
-    private void popFrame() {
+    public void popFrame() {
         Frame f = frameList.remove(frameList.size() - 1);
         LOGGER.info("pop the " + f.toString());
     }
 
-    private Frame topFrame() {
+    public Frame topFrame() {
         return frameList == null || frameList.isEmpty() ? null : frameList.get(frameList.size() - 1);
     }
 }
