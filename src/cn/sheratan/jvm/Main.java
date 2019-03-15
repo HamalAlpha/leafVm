@@ -26,7 +26,7 @@ public class Main {
         options.addOption("cp", classpath, true, "specify the classpath");
         options.addOption("h", help, false, "show the help message");
 
-        //定义帮助信息展示方法
+        //定义命令行帮助信息展示
         Function<Void, Integer> leafHelp = (v) -> {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("leafVm", options);
@@ -41,7 +41,7 @@ public class Main {
                 return;
             }
 
-            //参数中包含classpath
+            //获取classpath参数
             String cp = null;
             if(line.hasOption(classpath)){
                 cp = line.getOptionValue(classpath);
@@ -62,6 +62,6 @@ public class Main {
      * @return: void
      */ 
     private static void run(String cp, String mainClass){
-        System.out.println(Main.class.getClassLoader().toString());
+
     }
 }
