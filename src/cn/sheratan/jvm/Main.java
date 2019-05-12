@@ -15,7 +15,7 @@ public class Main {
 
     /**
      * @Description: leafVm主入口
-     * @Param args 传入命令行参数，类路径
+     * @Param args 传入命令行参数，类路径，格式：package.className -cp .
      * @return: void
      */
     public static void main(String[] args) {
@@ -63,6 +63,6 @@ public class Main {
      */
     private static void run(String cp, String mainClass) {
         VM vm = new VM(cp.split(";"), new VM.Config());
-        vm.run(mainClass);
+        vm.run(mainClass.replace('.','/'));
     }
 }

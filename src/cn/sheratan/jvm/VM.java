@@ -60,7 +60,9 @@ public class VM {
         Function<Integer, Boolean> flagCheck = (f) -> {
             return (f & methodInfo.getAccessFlags()) != 0;
         };
-        if (methodInfo == null || !flagCheck.apply(MethodInfo.ACC_PUBLIC) || !flagCheck.apply(MethodInfo.ACC_STATIC)) {
+        if(methodInfo == null){
+            throw new RuntimeException("not found the main function!");
+        }else if(!flagCheck.apply(MethodInfo.ACC_PUBLIC) || !flagCheck.apply(MethodInfo.ACC_STATIC)) {
             throw new RuntimeException("main method is not static&public");
         }
         //启动主线程

@@ -31,6 +31,13 @@ public class Thread {
         }
     }
 
+    public void runToEnd(Frame frame){
+        pushFrame(frame);
+        while(frameList.lastIndexOf(frame) >= 0){
+            frame.run();
+        }
+    }
+
     public void pushFrame(Frame f) {
         LOGGER.info("push the " + f.toString());
         frameList.add(f);

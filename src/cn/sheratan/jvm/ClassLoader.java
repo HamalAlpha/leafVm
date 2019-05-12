@@ -48,12 +48,12 @@ public class ClassLoader {
             return clazz;
         }
 
-        //下面步骤模拟类装载链接过程
+        //下面步骤模拟类装载链接（只执行验证、准备两个阶段，解析阶段是无法确定什么时候执行的）过程
         ClassFile cf = classPath.loadClassFile(fullName);
         if(cf == null){
             throw new RuntimeException("could not found the classFile :" + fullName);
         }
-        clazz = newClass(cf);
+        clazz = newClass(cf, fullName);
         resloveSuperClass(clazz);
         resloveInterfaces(clazz);
         link(clazz);
@@ -91,8 +91,7 @@ public class ClassLoader {
      * @Param cf 
      * @return: cn.sheratan.jvm.Class 
      */ 
-    private Class newClass(ClassFile cf){
-//        return new Class();
-        return null;
+    private Class newClass(ClassFile cf, String className){
+        return new Class(cf, this, className);
     }
 }

@@ -10,7 +10,7 @@ public class Slot {
     /**
      * @Description: 定义Slot存储类型，目前只支持引用类型和int类型（包括short，byte）
      */
-    public enum Type{ERF, NUM};
+    public enum Type{ERF, NUM}
 
     /**
      * @Description: 存储对象
@@ -39,6 +39,6 @@ public class Slot {
 
     @Override
     public String toString() {
-        return type == Type.NUM ? String.valueOf((Integer)obj) : obj.toString();
+        return type == Type.NUM ? String.valueOf(obj) : obj.toString();
     }
 }

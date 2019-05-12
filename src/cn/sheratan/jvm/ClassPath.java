@@ -23,14 +23,14 @@ public class ClassPath {
     private String[] cpLst;
 
     public ClassPath(String[] classpathLst) {
-
+        this.cpLst = classpathLst;
     }
 
     public ClassFile loadClassFile(String fullName) {
         for (String cp : cpLst) {
             ClassFile cf = loadClassFile(cp, fullName);
             if (cf != null) {
-                LOGGER.info("success loaded classfile:" + fullName + " from " + cp);
+                LOGGER.info("success loaded classfile '" + fullName + "' from '" + cp + "'");
                 return cf;
             }
         }
@@ -52,7 +52,7 @@ public class ClassPath {
             fis.read(data);
             return new ClassFile(data);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.info("fail to find the '" + fullName + "' file from the class path '" + path + "'");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FileFormatException e) {
